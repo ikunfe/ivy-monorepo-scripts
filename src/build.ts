@@ -1,12 +1,12 @@
 import { spawn } from 'child_process';
 import { join, relative } from 'path';
-import { existsSync, copySync } from 'fs-extra';
+import fs from 'fs-extra';
 
 const cwd = process.cwd();
 const PACKAGES_DIR = join(cwd, 'packages');
 const APPS_DIR = join(cwd, 'apps');
 
-function build() {
+export default function build() {
   const groupName = process.env.GROUP_NAME;
 
   let pnpmArgs: string[] = [];
@@ -32,8 +32,8 @@ function build() {
   ls.on('close', () => {
     if (packagePath) {
       const distPath = join(packagePath, 'dist');
-      if (existsSync(distPath)) {
-        copySync(distPath, join(cwd, 'dist'));
+      if (fs.existsSync(distPath)) {
+        fs.copySync(distPath, join(cwd, 'dist'));
       }
     }
   });
@@ -42,15 +42,13 @@ function build() {
 function getPackagePath(groupName: string): string {
   const dirName = groupName.replace('_', '-');
 
-  if (existsSync(join(PACKAGES_DIR, dirName))) {
+  if (fs.existsSync(join(PACKAGES_DIR, dirName))) {
     return join(PACKAGES_DIR, dirName);
   }
 
-  if (existsSync(join(APPS_DIR, dirName))) {
+  if (fs.existsSync(join(APPS_DIR, dirName))) {
     return join(APPS_DIR, dirName);
   }
 
   throw new Error(`${groupName} is not a valid group name`);
 }
-
-build();

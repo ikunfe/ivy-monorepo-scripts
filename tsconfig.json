@@ -11,8 +11,11 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "baseUrl": "./",
-    "rootDir": "src",
-    "outDir": "dist"
+    "rootDir": ".",
+    "outDir": "dist",
+    "allowImportingTsExtensions": true,
+    "emitDeclarationOnly": true,
+    "resolveJsonModule": true
   },
-  "include": ["src"]
+  "include": ["."]
 }

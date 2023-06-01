@@ -1,17 +1,19 @@
 {
   "name": "ivy-monorepo-scripts",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.1",
+  "description": "ivy monorepo scrips",
   "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "exports": "./dist/index.js",
+  "main": "./esm/index.js",
+  "types": "./esm/index.d.ts",
+  "exports": "./esm/index.js",
   "bin": {
-    "ivy-monorepo-scripts": "./dist/cli.js"
+    "ivy-monorepo-scripts": "./bin/cli.mjs"
   },
   "scripts": {
-    "build": "tsc",
-    "watch": "tsc -w"
+    "build": "rm -rf esm && ice-pkg build",
+    "watch": "rm -rf esm && ice-pkg start",
+    "prepublishOnly": "pnpm run build",
+    "setup": "rm -rf node_modules && pnpm i"
   },
   "repository": {
     "type": "git",
@@ -29,12 +31,15 @@
     "fs-extra": "^10.1.0",
     "inquirer": "^9.1.4",
     "shelljs": "^0.8.5",
-    "eslint": "8.22.0",
-    "@applint/spec": "^1.2.3"
+    "eslint": "^8.2.0",
+    "@applint/spec": "^1.2.3",
+    "esno": "^0.16.3",
+    "@ice/pkg": "^1.5.3"
   },
   "dependencies": {
     "cac": "^6.7.12",
     "typescript": "^5.0.0",
-    "ts-node": "^10.8.2"
+    "ts-node": "^10.8.2",
+    "@swc/helpers": "^0.5.1"
   }
 }

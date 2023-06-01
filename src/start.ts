@@ -1,6 +1,6 @@
 import inquirer from 'inquirer';
 import shell from 'shelljs';
-import { getStagedInfo } from './staged';
+import { getStagedInfo } from './staged.js';
 
 const filterAppName = (name: string) => {
   switch (name) {
@@ -13,7 +13,7 @@ const filterAppName = (name: string) => {
   }
 };
 
-async function start() {
+export default async function start() {
   const { changedAppFiles, allAppNames } = getStagedInfo();
 
   const onlyChangeOneApp = changedAppFiles.length === 1;
@@ -39,5 +39,3 @@ async function start() {
     shell.echo('请选择 app 项目!');
   }
 }
-
-start();

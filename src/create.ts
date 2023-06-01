@@ -1,6 +1,6 @@
 import { Generator } from '@umijs/utils';
 import inquirer from 'inquirer';
-import { existsSync } from 'fs-extra';
+import fs from 'fs-extra';
 import { join } from 'path';
 import { Inquirer } from './types';
 
@@ -9,6 +9,7 @@ enum ProjectTypePath {
   apps = './apps/',
   libs = './packages/'
 }
+
 class PkgGenerator extends Generator {
   name: string;
   template: string;
@@ -43,7 +44,7 @@ async function create(name: string, template: string, projectType: string) {
     run();
   }
   const path = ProjectTypePath[projectType];
-  if (!existsSync(join(cwd, `${path}${name}`))) {
+  if (!fs.existsSync(join(cwd, `${path}${name}`))) {
     await new PkgGenerator({
       name,
       cwd,
@@ -56,7 +57,7 @@ async function create(name: string, template: string, projectType: string) {
   }
 }
 
-async function run(template = '', projectPath = '') {
+export default async function run(template = '', projectPath = '') {
   const imquiryArr: Inquirer[] = [];
 
   !projectPath && imquiryArr.push({
@@ -65,7 +66,6 @@ async function run(template = '', projectPath = '') {
     message: '请选择项目的路径',
     choices: ['apps', 'packages'],
   });
-
 
   imquiryArr.push({
     type: 'input',
@@ -87,5 +87,3 @@ async function run(template = '', projectPath = '') {
   }: Record<string, string> = await inquirer.prompt(imquiryArr);
   await create(projectName, frame, projectType);
 }
-
-run();
