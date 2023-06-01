@@ -1,6 +1,6 @@
 {
   "name": "ivy-monorepo-scripts",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "ivy monorepo scrips",
   "type": "module",
   "main": "./esm/index.js",
@@ -9,6 +9,11 @@
   "bin": {
     "ivy-monorepo-scripts": "./bin/cli.mjs"
   },
+  "files": [
+    "esm",
+    "!esm/**/*.map",
+    "types.d.ts"
+  ],
   "scripts": {
     "build": "rm -rf esm && ice-pkg build",
     "watch": "rm -rf esm && ice-pkg start",
@@ -20,7 +25,7 @@
     "url": "git+https://github.com/ikunfe/ivy-monorepo-scripts.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "ikunfe",
   "license": "ISC",
   "devDependencies": {
     "@types/fs-extra": "^9.0.13",
