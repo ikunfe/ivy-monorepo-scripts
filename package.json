@@ -1,6 +1,6 @@
 {
   "name": "ivy-monorepo-scripts",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "ivy monorepo scrips",
   "type": "module",
   "main": "./esm/index.js",
@@ -17,8 +17,8 @@
   "scripts": {
     "build": "rm -rf esm && ice-pkg build",
     "watch": "rm -rf esm && ice-pkg start",
-    "prepublishOnly": "pnpm run build",
-    "setup": "rm -rf node_modules && pnpm i"
+    "setup": "rm -rf node_modules && pnpm i",
+    "prepublishOnly": "pnpm run build"
   },
   "repository": {
     "type": "git",

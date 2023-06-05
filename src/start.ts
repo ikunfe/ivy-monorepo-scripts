@@ -1,6 +1,5 @@
-import inquirer from 'inquirer';
 import shell from 'shelljs';
-import { getStagedInfo } from './staged.js';
+import { getAppName } from './getAppName.js';
 
 const filterAppName = (name: string) => {
   switch (name) {
@@ -14,24 +13,7 @@ const filterAppName = (name: string) => {
 };
 
 export default async function start() {
-  const { changedAppFiles, allAppNames } = getStagedInfo();
-
-  const onlyChangeOneApp = changedAppFiles.length === 1;
-  let app = '';
-
-  if (onlyChangeOneApp) {
-    app = changedAppFiles[0];
-  } else {
-    const chooseArr = changedAppFiles.length ? changedAppFiles : allAppNames;
-    const answer = await inquirer.prompt([{
-      type: 'list',
-      name: 'app',
-      message: '请选择需要启动的 app',
-      choices: chooseArr,
-      pageSize: chooseArr.length,
-    }]);
-    app = answer.app;
-  }
+  const app = await getAppName('请选择需要启动的 app');
 
   if (app) {
     shell.exec(`pnpm --filter ${filterAppName(app)} start`);

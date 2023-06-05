@@ -1,11 +1,10 @@
-import { fileURLToPath } from 'url';
 import { cac } from 'cac';
-import { readFileSync } from 'fs';
 import pkgJson from '../package.json' assert { type: "json" };
 import lint from '../esm/lint.js'
 import create from '../esm/create.js';
 import start from '../esm/start.js';
 import build from '../esm/build.js';
+import createBranch from '../esm/createBranch.js';
 
 const cli = cac('ivy-monorepo-scripts');
 
@@ -25,7 +24,6 @@ console.log('start');
     })
     .option('--force', 'skip select project when change multiple apps')
     .action(async (options) => {
-      delete options['--'];
       await lint(options)
     });
 
@@ -44,11 +42,19 @@ console.log('start');
     .action(() => {
       build()
     });
+  
+  cli
+    .command('createBranch', 'create branch by app', {
+      allowUnknownOptions: false,
+    })
+    .action(async () => {
+      await createBranch()
+    });
   cli.help();
   cli.version(pkgJson.version);
   cli.parse(process.argv, { run: true });
 })()
   .catch((err) => {
-    console.log('错误了');
+    console.log('错误了', err);
     process.exit(1);
   });

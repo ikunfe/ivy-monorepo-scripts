@@ -1,6 +1,6 @@
 import inquirer from 'inquirer';
 import shell from 'shelljs';
-import { Inquirer } from './types.ts';
+import { Inquirer } from './types';
 import { getStagedInfo } from './staged.js';
 
 const COMMIT_TYPE_REGEXP = /upd|feat|fix|refactor|docs|chore|style|revert/g;
