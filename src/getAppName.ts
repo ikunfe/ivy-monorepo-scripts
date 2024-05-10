@@ -7,7 +7,7 @@ export async function getAppName(message: string) {
   const onlyChangeOneApp = changedAppFiles.length === 1;
 
   if (onlyChangeOneApp) {
-     return changedAppFiles[0];
+    return changedAppFiles[0];
   } else {
     const chooseArr = changedAppFiles.length ? changedAppFiles : allAppNames;
     const answer = await inquirer.prompt<Record<string, string>>([{
